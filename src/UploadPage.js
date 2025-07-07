@@ -10,7 +10,7 @@ export default function UploadPage() {
     formData.append('photo', file);
     formData.append('caption', caption);
 
-    await axios.post('https://photo-share-backend.onrender.com/upload', formData, {
+    await axios.post('/api/upload', formData, {
       withCredentials: true,
       headers: { 'Content-Type': 'multipart/form-data' }
     });

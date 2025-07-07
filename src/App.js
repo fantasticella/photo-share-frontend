@@ -13,7 +13,7 @@ function App() {
   useEffect(() => {
     const checkSession = async () => {
       try {
-        const res = await axios.get('https://photo-share-backend.onrender.com/auth/me', { withCredentials: true });
+        const res = await axios.get('/api/auth/me', { withCredentials: true });
         setUser(res.data.user);
       } catch {
         setUser(null);

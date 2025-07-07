@@ -10,14 +10,14 @@ export default function LoginPage({ setUser }) {
   const login = async () => {
     try {
       const postRes = await axios.post(
-        'https://photo-share-backend.onrender.com/auth/login',
+        'api/auth/login',
         { username, password },
         { withCredentials: true }
       );
       console.log('🟢 Login POST successful:', postRes.data);
 
       const getRes = await axios.get(
-        'https://photo-share-backend.onrender.com/auth/me',
+        'api/auth/me',
         { withCredentials: true }
       );
       console.log('🟢 /auth/me response:', getRes.data);

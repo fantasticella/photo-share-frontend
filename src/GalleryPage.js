@@ -10,13 +10,13 @@ export default function GalleryPage() {
     const load = async () => {
       try {
         // 1. Get current user
-        const authRes = await axios.get('https://photo-share-backend.onrender.com/auth/me', {
+        const authRes = await axios.get('/api/auth/me', {
           withCredentials: true
         });
         setCurrentUser(authRes.data.user);
 
         // 2. Load photos
-        const res = await axios.get('https://photo-share-backend.onrender.com/upload', {
+        const res = await axios.get('/api/upload', {
           withCredentials: true
         });
         setPhotos(res.data);
