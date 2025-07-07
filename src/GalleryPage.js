@@ -40,7 +40,7 @@ export default function GalleryPage() {
       );
       setPhotos(prev => prev.filter(p => p.url !== url));
     } catch (err) {
-      alert('❌ Failed to delete photo.');
+      alert('Failed to delete photo.');
     }
   };
 
