@@ -29,6 +29,9 @@ export default function GalleryPage() {
   }, []);
 
   const deletePhoto = async (url) => {
+    const confirmDelete = window.confirm('Are you sure you want to delete this photo?');
+    if (!confirmDelete) return;
+  
     try {
       await axios.post(
         '/api/upload/delete',
