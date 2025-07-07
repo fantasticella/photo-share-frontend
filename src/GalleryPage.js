@@ -2,9 +2,10 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 
-export default function GalleryPage({ user }) {
+export default function GalleryPage({ currentUser }) {
   const [photos, setPhotos] = useState([]);
 
+  // Load gallery photos
   const loadPhotos = async () => {
     try {
       const res = await axios.get('https://photo-share-backend.onrender.com/upload', {
@@ -16,6 +17,7 @@ export default function GalleryPage({ user }) {
     }
   };
 
+  // Delete a photo by URL
   const deletePhoto = async (url) => {
     try {
       await axios.post(
@@ -23,9 +25,9 @@ export default function GalleryPage({ user }) {
         { url },
         { withCredentials: true }
       );
-      setPhotos((prev) => prev.filter((p) => p.url !== url));
+      setPhotos(prev => prev.filter(p => p.url !== url));
     } catch (err) {
-      alert('Failed to delete photo');
+      alert('❌ Failed to delete. You can only delete your own uploads.');
     }
   };
 
@@ -34,50 +36,50 @@ export default function GalleryPage({ user }) {
   }, []);
 
   return (
-    <div style={{ padding: 20 }}>
+    <div style={{ padding: '20px' }}>
       <h2>📸 Shared Gallery</h2>
-      <Link to="/upload">➕ Upload Photo</Link>
-      <div
-        style={{
-          display: 'flex',
-          flexWrap: 'wrap',
-          gap: '20px',
-          marginTop: '20px',
-          justifyContent: 'center'
-        }}
-      >
+      <Link to="/upload">Upload Photo</Link>
+
+      <div style={{
+        display: 'flex',
+        flexWrap: 'wrap',
+        gap: '15px',
+        marginTop: '20px',
+        justifyContent: 'center'
+      }}>
         {photos.map((p, i) => (
-          <div
-            key={i}
-            style={{
-              border: '1px solid #ccc',
-              borderRadius: 10,
-              padding: 10,
-              width: 220,
-              boxShadow: '0 4px 8px rgba(0,0,0,0.1)'
-            }}
-          >
+          <div key={i} style={{
+            border: '1px solid #ccc',
+            padding: 10,
+            borderRadius: 8,
+            width: 220,
+            boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+            position: 'relative'
+          }}>
             <img
-              src={p.url.startsWith('http') ? p.url : `https://photo-share-backend.onrender.com${p.url}`}
+              src={p.url}
               alt={p.caption}
-              style={{ width: '100%', borderRadius: 5 }}
+              style={{ width: '100%', height: 'auto', borderRadius: 4 }}
             />
-            <p style={{ marginTop: 8, fontWeight: 'bold' }}>{p.caption}</p>
-            <p style={{ fontSize: 12, color: '#555' }}>— {p.user}</p>
-            {user === p.user && (
+            <p style={{ marginTop: 8 }}><strong>{p.caption}</strong></p>
+            <p style={{ fontSize: '0.9em', color: '#555' }}>— {p.user}</p>
+
+            {currentUser === p.user && (
               <button
                 onClick={() => deletePhoto(p.url)}
                 style={{
-                  marginTop: 10,
-                  backgroundColor: '#f44336',
+                  position: 'absolute',
+                  top: 5,
+                  right: 5,
+                  background: '#ff5c5c',
                   color: 'white',
                   border: 'none',
-                  padding: '6px 10px',
-                  borderRadius: 5,
+                  padding: '4px 8px',
+                  borderRadius: 4,
                   cursor: 'pointer'
                 }}
               >
-                Delete
+                ❌
               </button>
             )}
           </div>
