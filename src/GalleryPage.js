@@ -46,7 +46,7 @@ export default function GalleryPage() {
 
   return (
     <div style={{ padding: '20px' }}>
-      <h2>📸 Shared Gallery</h2>
+      <h2>bad bitches only </h2>
       <Link to="/upload">Upload Photo</Link>
 
       <div style={{
