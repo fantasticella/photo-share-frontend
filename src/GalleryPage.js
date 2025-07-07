@@ -2,22 +2,32 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 
-export default function GalleryPage({ currentUser }) {
+export default function GalleryPage() {
   const [photos, setPhotos] = useState([]);
+  const [currentUser, setCurrentUser] = useState(null);
 
-  // Load gallery photos
-  const loadPhotos = async () => {
-    try {
-      const res = await axios.get('https://photo-share-backend.onrender.com/upload', {
-        withCredentials: true
-      });
-      setPhotos(res.data);
-    } catch (err) {
-      console.error('Failed to load gallery:', err);
-    }
-  };
+  useEffect(() => {
+    const load = async () => {
+      try {
+        // 1. Get current user
+        const authRes = await axios.get('https://photo-share-backend.onrender.com/auth/me', {
+          withCredentials: true
+        });
+        setCurrentUser(authRes.data.user);
 
-  // Delete a photo by URL
+        // 2. Load photos
+        const res = await axios.get('https://photo-share-backend.onrender.com/upload', {
+          withCredentials: true
+        });
+        setPhotos(res.data);
+      } catch (err) {
+        console.error('Failed to load gallery or user:', err);
+      }
+    };
+
+    load();
+  }, []);
+
   const deletePhoto = async (url) => {
     try {
       await axios.post(
@@ -30,10 +40,6 @@ export default function GalleryPage({ currentUser }) {
       alert('❌ Failed to delete. You can only delete your own uploads.');
     }
   };
-
-  useEffect(() => {
-    loadPhotos();
-  }, []);
 
   return (
     <div style={{ padding: '20px' }}>
