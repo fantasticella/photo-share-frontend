@@ -8,7 +8,9 @@ export default function GalleryPage() {
   useEffect(() => {
     const loadPhotos = async () => {
       try {
-        const res = await axios.get('https://photo-share-backend.onrender.com/upload/all', { withCredentials: true });
+        const res = await axios.get('https://photo-share-backend.onrender.com/upload', {
+          withCredentials: true
+        });
         setPhotos(res.data);
       } catch (err) {
         console.error('Failed to load gallery:', err);
@@ -26,7 +28,7 @@ export default function GalleryPage() {
         {photos.map((p, i) => (
           <div key={i} style={{ border: '1px solid #ccc', padding: 10, borderRadius: 5 }}>
             <img
-              src={`https://photo-share-backend.onrender.com${p.url}`}
+              src={p.url}
               alt={p.caption}
               style={{ width: 200, height: 'auto', display: 'block' }}
             />
