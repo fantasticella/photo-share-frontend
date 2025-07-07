@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 export default function UploadPage() {
   const [file, setFile] = useState();
   const [caption, setCaption] = useState('');
+  const navigate = useNavigate(); 
 
   const upload = async () => {
     const formData = new FormData();
@@ -15,6 +17,7 @@ export default function UploadPage() {
       headers: { 'Content-Type': 'multipart/form-data' }
     });
     alert('bad bitch pic uploaded xx!');
+    navigate('/gallery'); 
   };
 
   return (
