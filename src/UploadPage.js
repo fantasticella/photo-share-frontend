@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import axios from 'axios';
-import { Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 export default function UploadPage() {
   const [file, setFile] = useState();
@@ -16,7 +16,7 @@ export default function UploadPage() {
       headers: { 'Content-Type': 'multipart/form-data' }
     });
     alert('bad bitch pic uploaded xx!');
-    Navigate('/gallery');
+    navigate('/gallery');
   };
 
   return (
