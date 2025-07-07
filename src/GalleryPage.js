@@ -31,13 +31,13 @@ export default function GalleryPage() {
   const deletePhoto = async (url) => {
     try {
       await axios.post(
-        'https://photo-share-backend.onrender.com/upload/delete',
+        '/api/upload/delete',
         { url },
         { withCredentials: true }
       );
       setPhotos(prev => prev.filter(p => p.url !== url));
     } catch (err) {
-      alert('❌ Failed to delete. You can only delete your own uploads.');
+      alert('❌ Failed to delete photo.');
     }
   };
 
@@ -70,24 +70,22 @@ export default function GalleryPage() {
             <p style={{ marginTop: 8 }}><strong>{p.caption}</strong></p>
             <p style={{ fontSize: '0.9em', color: '#555' }}>— {p.user}</p>
 
-            {currentUser === p.user && (
-              <button
-                onClick={() => deletePhoto(p.url)}
-                style={{
-                  position: 'absolute',
-                  top: 5,
-                  right: 5,
-                  background: '#ff5c5c',
-                  color: 'white',
-                  border: 'none',
-                  padding: '4px 8px',
-                  borderRadius: 4,
-                  cursor: 'pointer'
-                }}
-              >
-                ❌
-              </button>
-            )}
+            <button
+              onClick={() => deletePhoto(p.url)}
+              style={{
+                position: 'absolute',
+                top: 5,
+                right: 5,
+                background: '#ff5c5c',
+                color: 'white',
+                border: 'none',
+                padding: '4px 8px',
+                borderRadius: 4,
+                cursor: 'pointer'
+              }}
+            >
+              ❌
+            </button>
           </div>
         ))}
       </div>
