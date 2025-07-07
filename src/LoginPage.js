@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import './LoginPage.css';
+import logo from "./images/logo.png";
 
 export default function LoginPage({ setUser }) {
   const [username, setUsername] = useState('');
@@ -10,14 +12,14 @@ export default function LoginPage({ setUser }) {
   const login = async () => {
     try {
       const postRes = await axios.post(
-        'api/auth/login',
+        '/api/auth/login',
         { username, password },
         { withCredentials: true }
       );
       console.log('🟢 Login POST successful:', postRes.data);
 
       const getRes = await axios.get(
-        'api/auth/me',
+        '/api/auth/me',
         { withCredentials: true }
       );
       console.log('🟢 /auth/me response:', getRes.data);
@@ -35,19 +37,22 @@ export default function LoginPage({ setUser }) {
   };
 
   return (
-    <div>
-      <input
-        placeholder="Username"
-        onChange={e => setUsername(e.target.value)}
-        value={username}
-      />
-      <input
-        placeholder="Password"
-        type="password"
-        onChange={e => setPassword(e.target.value)}
-        value={password}
-      />
-      <button onClick={login}>Login</button>
+    <div className="login-container">
+      <img src={logo} alt="EBLCDA Logo" className="login-logo" />
+      <div className="login-box">
+        <input
+          placeholder="Username"
+          onChange={e => setUsername(e.target.value)}
+          value={username}
+        />
+        <input
+          placeholder="Password"
+          type="password"
+          onChange={e => setPassword(e.target.value)}
+          value={password}
+        />
+        <button onClick={login}>Login</button>
+      </div>
     </div>
   );
 }
